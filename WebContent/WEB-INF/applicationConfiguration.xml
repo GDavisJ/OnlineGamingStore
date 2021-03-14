@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:tx="http://www.springframework.org/schema/tx"
+   
+   xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd
+   http://www.springframework.org/schema/aop
+   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+   http://www.springframework.org/schema/mvc
+   http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+   http://www.springframework.org/schema/tx 
+   http://www.springframework.org/schema/tx/spring-tx-3.0.xsd       ">
+
+   <context:component-scan base-package="com.gamingstore" />
+   <context:annotation-config/>
+   <mvc:annotation-driven />
+
+   <mvc:resources mapping="/resources/**" location="/resources/" />
+   <mvc:resources location="/WEB-INF/images/" mapping="/images/**" />
+   
+   
+  	<bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+ 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/layouts/layouts.xml</value>
+				<value>/WEB-INF/layouts/views.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Register the SpringBeans -->
+    <bean id="userDao" class="com.gamingstore.dao.UserDaoImpl" />
+    <bean id="productService" class="com.gamingstore.services.ProductServiceImpl" />
+    <bean id="productDao" class="com.gamingstore.dao.ProductDaoImpl" />
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="datasource" />
+    </bean>
+	
+    
+    <!-- MySQL Datasource -->
+    <bean id="datasource" destroy-method="close" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/gaming_db" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+    
+
+   
+ </beans>
