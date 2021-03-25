@@ -18,8 +18,8 @@
 	function getUsers(){
 		$.ajax({
 					type: "GET",
-					url: "/OnlineGamingStore/service/users",
-					//url: "https://onlinegamingstore.azurewebsites.net/service/users",
+					//url: "/OnlineGamingStore/service/users",
+					url: "https://onlinegamingstore.azurewebsites.net/service/users",
 					dataType: "json",
 					success: function(data){
 						// Display users in the jQuery Data Table
