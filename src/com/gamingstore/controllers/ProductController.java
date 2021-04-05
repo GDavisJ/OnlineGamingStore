@@ -16,21 +16,22 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gamingstore.models.Product;
 import com.gamingstore.services.ProductService;
 
+/**The product controller handles any incoming URL request dealing with the product pages (Add, Update and Delete) */
 @Controller
 public class ProductController {
-	//inject the Product service
+	/**injects the Product service*/
 	@Autowired
 	public ProductService productService;
 	private static Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
-	//used to GET the add product page based on user request
+	/**Used to GET the add product page based on user request.*/
 	@RequestMapping(path = "/addproduct", method = RequestMethod.GET) 
 	public ModelAndView displayForm() {
 		logger.info("Entering and Leaving ProductController.displayForm");
 		return new ModelAndView("addProduct", "product", new Product());
 	}
 	
-	//method is called once the add product form is submitted (POST).
+	/**Method used to submit the add product form (POST) and add product to database.*/
 	@RequestMapping(path = "/addproduct", method = RequestMethod.POST)
 	public ModelAndView addProduct(@Valid @ModelAttribute("product") Product product, BindingResult result) {
 		logger.info("Entering ProductController.addProduct");
@@ -67,7 +68,7 @@ public class ProductController {
 	}
 	
 	
-	//used to update a product
+	/**Used to update a product.*/
 	@GetMapping(path = "/updateProd") 
 	public ModelAndView updateProduct(@RequestParam("prodId") int prodId) {
 		logger.info("Entering ProductController.updateProd");
@@ -76,7 +77,7 @@ public class ProductController {
 		return new ModelAndView("addProduct", "product", product);
 	}
 	
-	//used to delete a product
+	/**Used to delete a product.*/
 	@GetMapping(path = "/deleteProd") 
 	public ModelAndView deleteProduct(@RequestParam("prodId") int prodId) {
 		logger.info("Entering ProductController.deleteProd");
@@ -85,7 +86,7 @@ public class ProductController {
 		return new ModelAndView("displayProducts", "products", productService.getProducts());
 	}
 	
-	//used to GET the add products page
+	/**Used to GET the add products page.*/
 	@RequestMapping(path = "/getProducts", method = RequestMethod.GET) 
 	public ModelAndView displayProducts() {
 		logger.info("Entering and Leaving ProductController.displayProducts");

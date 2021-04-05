@@ -13,25 +13,25 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import com.gamingstore.models.User;
 
+/**The user data access object (DAO) used to create, read, update and delete items in the user database.*/
 public class UserDaoImpl implements UserDao {
- // import data source
+ /**Injects data source.*/
   @Autowired
   DataSource datasource;
- // import jbdc template
+ /**Injects JDBC template.*/
   @Autowired
   JdbcTemplate jdbcTemplate;
 	private static Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
+	  /**Method to add a new user to the database.*/	
   public int register(User user) {
 		logger.info("Entering UserDaoImpl.register");
     String sql="insert into gaming_db.users(username, password, firstname, lastname, email, phonenumber) VALUES ('"+user.getUsername()+"','"+user.getPassword()+"','"+user.getFirstname()+"','"+user.getLastname()+"','"+user.getEmail()+"','"+user.getPhonenumber()+"')";
 	logger.info("Leaving UserDaoImpl.register");
     return jdbcTemplate.update(sql);
   }
-  /*
-   * Method to check if user is registered
-   *
-   */
+  
+  /**Method to check if user is registered.*/
   public boolean checkRegister(User user) {
 		logger.info("Entering UserDaoImpl.checkRegister");
 	  // sql query
@@ -47,10 +47,8 @@ public class UserDaoImpl implements UserDao {
 		logger.info("Leaving UserDaoImpl.checkRegister");
 	  return false;
   }
-  /*
-   * Method to validate the user
-   * 
-   */
+  
+  /**Method to validate the user.*/
   public User validateUser(User user) {
 		logger.info("Entering UserDaoImpl.validateUser");
 	  // sql query
@@ -63,7 +61,7 @@ public class UserDaoImpl implements UserDao {
     return users.size() > 0 ? users.get(0) : null;
   }
   
-  //Returns a list of users in the database.
+  /**Used to return a list of users in the database.*/
   public List<User> getUsers() {
 		logger.info("Entering UserDaoImpl.getUsers");
 	  String sql="select * from gaming_db.users";
@@ -75,7 +73,7 @@ public class UserDaoImpl implements UserDao {
 
 }
 
-//use the RowMapper implementation to iterate the ResultSet and add it into the collection.
+/**RowMapper implementation to iterate the ResultSet and add it into the collection.*/
 class UserMapper implements RowMapper<User> {
 
   public User mapRow(ResultSet rs, int arg1) throws SQLException {

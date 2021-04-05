@@ -14,23 +14,22 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gamingstore.models.User;
 import com.gamingstore.services.UserService;
 
+/**The User controller handles any incoming URL request dealing with the login page. */
 @Controller
 public class UserController {
-	// Call the user business service
+	/**Inject the user business service.*/
 	@Autowired
 	UserService userService;
 	private static Logger logger = LoggerFactory.getLogger(UserController.class);
-	/*
-	 * Method to display login pag
-	 */
+	
+	/**Method to display login page.*/
 	@RequestMapping(path = "/login", method = RequestMethod.GET) 
 	public ModelAndView displayForm() {
 		logger.info("Entering and Leaving UserController.displayForm");
 		return new ModelAndView("login", "user", new User());
 	}
-	/*
-	 * Method to process login attempt
-	 */
+	
+	/**Method to process login attempt.*/
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public ModelAndView loginUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
 		logger.info("Entering UserController.loginUser");
@@ -62,7 +61,7 @@ public class UserController {
 		
 	}
 	
-	//Used to display the table of users (uses jQuery to create the table)
+	/**Used to display the table of users (uses jQuery to create the table)*/
 	@RequestMapping("/users")
 	public ModelAndView getUsers(){
 		logger.info("Entering and Leaving UserController.getUsers");

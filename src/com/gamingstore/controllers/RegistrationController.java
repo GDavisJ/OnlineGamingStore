@@ -14,21 +14,22 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gamingstore.models.User;
 import com.gamingstore.services.UserService;
 
+/**The Registration controller handles any incoming URL request dealing with the registration page and add users to the users database. */
 @Controller
 public class RegistrationController {
-	//inject the user service
+	/**Injects the user service.*/
 	@Autowired
 	public UserService userService;
 	private static Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 	
-	//used to GET the registration page based on user request
+	/**Used to GET the registration page based on user request.*/
 	@RequestMapping(path = "/registration", method = RequestMethod.GET) 
 	public ModelAndView displayForm() {
 		logger.info("Entering and Leaving RegistrationController.displayForm");
 		return new ModelAndView("registration", "user", new User());
 	}
 	
-	//method is called once the reg form is submitted (POST).
+	/**Method is called once the registration form is submitted (POST).*/
 	@RequestMapping(path = "/registration", method = RequestMethod.POST)
 	public ModelAndView addUser(@Valid @ModelAttribute("user") User user, BindingResult result) {
 		logger.info("Entering RegistrationController.addUser");

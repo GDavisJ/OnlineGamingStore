@@ -6,11 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+/**This is the home controller used for mapping to the home page*/
 @Controller
-
 public class HomeController {
 	private static Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+	/**Method used to map to the home page if "/" is used for the link*/
 	@RequestMapping("/")
 	public ModelAndView home()
 	{
@@ -19,6 +20,7 @@ public class HomeController {
 		
 	}
 	
+	/**Method used to map to the home page if "/home" is used as the link*/
 	@RequestMapping("/home")
 	public ModelAndView homeMap()
 	{

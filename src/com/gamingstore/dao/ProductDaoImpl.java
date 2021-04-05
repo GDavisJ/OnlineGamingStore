@@ -13,18 +13,19 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import com.gamingstore.models.Product;
 
+/**The product data access object (DAO) used to create, read, update and delete items in the product database.*/
 public class ProductDaoImpl implements ProductDao {	
-  //inject the DataSource
+  /**inject the DataSource*/
   @Autowired
   DataSource datasource;
-  //inject the jdbcTemplate
+  /**inject the jdbcTemplate*/
   @Autowired
   JdbcTemplate jdbcTemplate;
   
   private static Logger logger = LoggerFactory.getLogger(ProductDaoImpl.class);
 
 
-  //Adds a new product to the database.
+  /**Adds a new product to the database.*/
   public int registerProduct(Product product) {
 		logger.info("Entering ProductDaoImpl.registerProduct");
     String sql="insert into gaming_db.products(productName, productDescription, productQuantity, productPrice) VALUES ('"+product.getProductName()+"','"+product.getProductDescription()+"',"+product.getProductQuantity()+","+product.getProductPrice()+")";
@@ -32,7 +33,7 @@ public class ProductDaoImpl implements ProductDao {
     return jdbcTemplate.update(sql);
   }
   
-  //Checks if the product name already exists in the database. 
+  /**Checks if the product name already exists in the database. */
   public boolean checkProduct(Product product) {
 		logger.info("Entering ProductDaoImpl.checkProduct");
 	  String sql="select * from gaming_db.products where productName='" + product.getProductName() +"'";
@@ -46,7 +47,7 @@ public class ProductDaoImpl implements ProductDao {
 	  return false;
   }
 
-  //Returns a list of products in the database.
+  /**Returns a list of products in the database.*/
   public List<Product> getProducts() {
 		logger.info("Entering ProductDaoImpl.getProducts");
 	  String sql="select * from gaming_db.products";
@@ -56,7 +57,7 @@ public class ProductDaoImpl implements ProductDao {
   }
   
   
-  //Checks if the product name already exists in the database. 
+  /**Checks if the product name already exists in the database.*/
   public Product getProduct(int prodId) {
 	  logger.info("Entering ProductDaoImpl.getProduct");
 	  String sql="select * from gaming_db.products where prodId="+ prodId;
@@ -64,7 +65,7 @@ public class ProductDaoImpl implements ProductDao {
 	  return jdbcTemplate.query(sql, new ProductMapper()).get(0);
   }
   
-  //Deletes a product in the database.
+  /**Deletes a product in the database.*/
   public int deleteProduct(int prodId) {
 	  logger.info("Entering ProductDaoImpl.deleteProduct");
     String sql="DELETE FROM gaming_db.products WHERE prodId = "+ prodId;  
@@ -72,7 +73,7 @@ public class ProductDaoImpl implements ProductDao {
     return jdbcTemplate.update(sql);
   }
   
-  //Updates a product in the database.
+  /**Updates a product in the database.*/
   public int updateProduct(Product product) {
 	  logger.info("Entering ProductDaoImpl.updateProduct");
     String sql="UPDATE gaming_db.products SET productName=?, productDescription=?, productQuantity=?, productPrice=? WHERE prodId = "+ product.getProdId(); 
@@ -82,7 +83,7 @@ public class ProductDaoImpl implements ProductDao {
   
 }
 
-//use the RowMapper implementation to iterate the ResultSet and add it into the collection.
+/**RowMapper implementation to iterate the ResultSet and add it into the collection.*/
 class ProductMapper implements RowMapper<Product> {
   public Product mapRow(ResultSet rs, int arg1) throws SQLException {
     Product product = new Product();
